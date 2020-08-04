@@ -1,0 +1,50 @@
+CREATE TABLE Company(
+"CompanyID" int primary key,
+"CompanyName" text
+);
+CREATE TABLE Location (
+LocationID int primary key,
+Country text,
+State Province text,
+City text
+);
+CREATE TABLE Manager (
+ManagerSupervisorID Int primary key,
+Firstname text,
+Lastname text,
+Email varchar,
+Phone varchar
+);
+CREATE TABLE Job (
+JobID int primary key,
+JobTitle text
+);
+CREATE TABLE Employer (
+CompanyID int,
+LocationID int,
+ManagerSupervisorID int,
+JobID int
+);
+1001|ISU Youth Work Camp
+1002|Camp Limberlost Volunteers
+1003|Checkers Rally
+1004|Sonics DriveIn
+7001|US|IL|Normal
+7002|US|IL|Bloomington
+7003|US|LA|Lake Charles
+5001|Food Service Advisor
+5002|Volunteer Lead
+5003|Night Supervisor
+5004|General Manager
+6001|Thomas|Singleton|manager@ISU.com|(555) 555-5555
+6002|Martha|Lockheart|manager@Kids.com|(444) 444-4444
+6003|Wilenda|Johnson|manager@rallys.com|(333) 333-3333
+6004|Dodus|Bunkowski|manager@sonicsusa.com|(333) 333-2222
+1001|7001|6001|5001
+1002|7002|6002|5002
+1003|7003|6003|5003
+1004|7003|6004|5004
+Thomas|Singleton|Food Service Advisor
+Martha|Lockheart|Volunteer Lead
+Wilenda|Johnson|Night Supervisor
+Dodus|Bunkowski|General Manager

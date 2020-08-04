@@ -1,0 +1,61 @@
+--Rhay C. Scott
+
+--TSQL-HW06
+
+--July 29, 2020
+
+1. What does a set operator do?
+
+Set operators are operators that combine rows from two query result sets (or multisets).  
+
+UNION, UNION ALL, INTERSECT, and EXCEPT
+
+A set operator compares complete rows between the results of the two input queries involved. Whether a row will be returned in the result of the operator depends on the outcome of the comparison and the operator used.
+
+2. What are the general requirements of a set operator
+
+-the two queries involved cannot have ORDER BY clauses
+
+-The number and the order of the columns must be the same in both queries.
+
+-The data types of the corresponding columns must be the same or compatible.
+
+3. What is a Venn Diagram? This is not in the book.
+
+A Venn diagram is constructed with a collection of simple closed curves drawn in a plane. The "principle of these diagrams is that classes or sets -be represented by regions in such relation to one another that all the possible logical relations of these classes can be indicated in the same diagram. That is, the diagram initially leaves room for any possible relation of the classes, and the actual or given relation, can then be specified by indicating that some particular region is null or is not-null".
+
+4. Draw a Venn Diagram of the UNION operator. What does it do?
+
+SQL Server UNION is one of the set operations that allows you to combine results of two SELECT statements into a single result set which includes all the rows that belongs to the SELECT statements in the union.
+
+5. Draw a Venn Diagram of the UNION ALL operator. What does it do?
+               
+The UNION ALL operator unifies the two input query results without attempting to remove duplicates from the result. 
+
+6. Draw a Venn Diagram of the INTERSECT operator. What does it do?
+
+The INTERSECT keyword allows you to find results that exist in both queries. Two SELECT statements are needed, and any results that are found in both of them are returned if INTERSECT is used.
+
+The difference between UNION and INTERSECT is that UNION gets results from both queries and combines them, while INTERSECT gets results that only exist in both queries.
+
+7. If SQL Server supported the INTERSECT ALL operator, what would it do?
+
+Wouldn't eliminate duplicate rows.
+
+8. Draw a Venn Diagram of the EXCEPT operator. What does it do?
+
+All of the rows from the first query that do not have matching rows in the second query are returned.
+
+9. If SQL Server supported the EXCEPT ALL operator, what would it do?
+
+Wouldn't eliminate duplicate rows.
+
+10. What is the precedence of the set operators?
+
+All of the set operators have the same precedence. In complex queries that include more than one set operator, the precedence of operators is from left to right
+
+11. The symmetric difference of two sets A and B is all elements in A that are also not in A and B, and all elements of B that are also not in A and B. For example, if set A consisted of all integers between 1 and 100 that are divisible by 2, and set B consisted of all integers between 1 and 100 that are divisible by 3, the symmetric difference of A and B would include all integers in A and B except integers divisible by both 2 and 3, e.g., 6, 12, 18, etc. Write a SQL query that computes the symmetric difference of two tables A and B.
+
+select (even) from (table a)
+except
+select (odd) from (table b)

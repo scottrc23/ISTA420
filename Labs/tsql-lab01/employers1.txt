@@ -1,0 +1,187 @@
+Paper View
+Name:  Rhay C. Scott
+File:  SQL Lab01
+Date:  July 5, 2020
+
+Microsoft Windows [Version 10.0.18362.900]
+(c) 2019 Microsoft Corporation. All rights reserved.
+C:\Users\McThug>cd quantico06
+C:\Users\McThug\quantico06>sqlite3 employers.db
+SQLite version 3.32.3 2020-06-18 14:00:33
+Enter ".help" for usage hints.
+sqlite> create table Company(
+   ...> "CompanyID" int primary key,
+   ...> "CompanyName" text
+   ...> );
+sqlite> .open employers.db
+sqlite> drop table if exists company
+   ...> .header on
+   ...> .echo on
+sqlite> create table Company (
+   ...> CompanyID int primary key,
+   ...> CompanyName text
+   ...> );
+Error: table Company already exists
+sqlite> .schema company
+.schema company
+CREATE TABLE Company(
+"CompanyID" int primary key,
+"CompanyName" text
+);
+sqlite> insert into Company values (1001, "ISU Youth Work Camp");
+insert into Company values (1001, "ISU Youth Work Camp");
+sqlite> insert into Company values (1002, "Camp Limberlost Volunteers");
+insert into Company values (1002, "Camp Limberlost Volunteers");
+sqlite> insert into Company values (1003, "Checkers Rally");
+insert into Company values (1003, "Checkers Rally");
+sqlite> insert into Company values (1004, "Sonics DriveIn");
+insert into Company values (1004, "Sonics DriveIn");
+sqlite> select * from company
+   ...> ;
+select * from company
+;
+CompanyID|CompanyName
+1001|ISU Youth Work Camp
+1002|Camp Limberlost Volunteers
+1003|Checkers Rally
+1004|Sonics DriveIn
+sqlite> drop table if exists location;
+create table Location (
+LocationID int primary key,
+Country text,
+State Province text,
+City text
+);
+sqlite> .schema location
+.schema location
+CREATE TABLE Location (
+LocationID int primary key,
+Country text,
+State Province text,
+City text
+);
+sqlite> insert into Location values (7001, "US", "IL", "Normal");
+insert into Location values (7001, "US", "IL", "Normal");
+sqlite> insert into Location values (7002, "US", "IL", "Bloomington");
+insert into Location values (7002, "US", "IL", "Bloomington");
+sqlite> insert into Location values (7003, "US", "LA", "Lake Charles");
+insert into Location values (7003, "US", "LA", "Lake Charles");
+sqlite> select * from location;
+select * from location;
+LocationID|Country|State|City
+7001|US|IL|Normal
+7002|US|IL|Bloomington
+7003|US|LA|Lake Charles
+sqlite> drop table if exists manager
+   ...> ;
+sqlite> create table Manager (
+   ...> ManagerSupervisorID Int primary key,
+   ...> Firstname text,
+   ...> Lastname text,
+   ...> Email varchar,
+   ...> Phone varchar
+   ...> );
+sqlite> .schema manager
+CREATE TABLE Manager (
+ManagerSupervisorID Int primary key,
+Firstname text,
+Lastname text,
+Email varchar,
+Phone varchar
+);
+sqlite> insert into Manager values (6001, "Thomas", "Singleton", "manager@ISU.com", "(555) 555-5555");
+sqlite> insert into Manager values (6002, "Martha", "Lockheart", "manager@Kids.com", "(444) 444-4444");
+sqlite> insert into Manager values (6003, "Wilenda", "Johnson", "manager@rallys.com","(333) 333-3333");
+sqlite> insert into Manager values (6004, "Dodus", "Bunkowski", "manager@sonicsusa.com", "(333) 333-2222");
+sqlite> select * from manager
+   ...> ;
+6001|Thomas|Singleton|manager@ISU.com|(555) 555-5555
+6002|Martha|Lockheart|manager@Kids.com|(444) 444-4444
+6003|Wilenda|Johnson|manager@rallys.com|(333) 333-3333
+6004|Dodus|Bunkowski|manager@sonicsusa.com|(333) 333-2222
+sqlite> create table Job (
+   ...> JobID int primary key,
+   ...> JobTitle text
+   ...> );
+sqlite> .schema Job
+CREATE TABLE Job (
+JobID int primary key,
+JobTitle text
+);
+sqlite> insert into Job values (5001, "Food Service Advisor");
+sqlite> insert into Job values (5002, "Volunteer Lead");
+sqlite> insert into Job values (5003, "Night Supervisor");
+sqlite> insert into Job values (5004, "General Manager");
+sqlite> select * from Job;
+5001|Food Service Advisor
+5002|Volunteer Lead
+5003|Night Supervisor
+5004|General Manager
+sqlite> create table Employer (
+   ...> CompanyID int,
+   ...> LocationID int,
+   ...> ManagerSupervisorID int,
+   ...> JobID int
+   ...> );
+sqlite> .schema Employer
+CREATE TABLE Employer (
+CompanyID int,
+LocationID int,
+ManagerSupervisorID int,
+JobID int
+);
+sqlite> insert into Employer values (1001, 7001, 6001, 5001);
+sqlite> insert into Employer values (1002, 7002, 6002, 5002);
+sqlite> insert into Employer values (1003, 7003, 6003, 5003);
+sqlite> insert into Employer values (1004, 7003, 6004, 5004);
+sqlite> select * from Employer;
+1001|7001|6001|5001
+1002|7002|6002|5002
+1003|7003|6003|5003
+1004|7003|6004|5004
+sqlite> .schema
+CREATE TABLE Company(
+"CompanyID" int primary key,
+"CompanyName" text
+);
+CREATE TABLE Location (
+LocationID int primary key,
+Country text,
+State Province text,
+City text
+);
+CREATE TABLE Manager (
+ManagerSupervisorID Int primary key,
+Firstname text,
+Lastname text,
+Email varchar,
+Phone varchar
+);
+CREATE TABLE Job (
+JobID int primary key,
+JobTitle text
+);
+CREATE TABLE Employer (
+CompanyID int,
+LocationID int,
+ManagerSupervisorID int,
+JobID int
+);
+sqlite> .output employers.txt
+sqlite> .schema
+sqlite> select * from company;
+sqlite> select * from location;
+sqlite> select * from job;
+sqlite> select * from manager;
+sqlite> select * from employer;
+sqlite> select Firstname, Lastname, Jobtitle
+   ...> from manager, job, employer
+   ...> where manager.ManagerSupervisorID = employer.ManagerSupervisorID
+   ...> and job.jobid = employer.jobid;
+sqlite> .output
+sqlite> select * from job;
+5001|Food Service Advisor
+5002|Volunteer Lead
+5003|Night Supervisor
+5004|General Manager
+sqlite>

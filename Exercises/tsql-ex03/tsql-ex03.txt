@@ -1,0 +1,201 @@
+
+.header on
+
+--Rhay Scott
+
+--TSQL-EX03
+
+--July 19, 2020
+
+--1. Using SQLite and the Northwind database, create a line item report that contains a line for each
+--product in the order with the following columns: the order id, the product id, the unit price, the
+--quantity sold, the line item price, and the percent of that line item constitutes of the total amount of
+--the order.
+
+select o.orderid, od.productid, od.unitprice, od.quantity, (od.unitprice*od.quantity) as LineTotal, (od.unitprice * od.quantity) / (sum(od.unitprice * od.quantity) * 100) as PctOfTotalOrder from order_details od join orders o on od.orderid = o.orderid group by od.orderid order by od.orderid limit 25;
+OrderID|ProductID|UnitPrice|Quantity|LineTotal|PctOfTotalOrder
+10248|11|14.0|12|168.0|0.00381818181818182
+10249|14|18.6|9|167.4|0.000898357840506601
+10250|41|7.7|10|77.0|0.000424710424710425
+10251|22|16.8|6|100.8|0.00150268336314848
+10252|20|64.8|40|2592.0|0.00694906166219839
+10253|31|10.0|20|200.0|0.00138427464008859
+10254|24|3.6|15|54.0|0.000863723608445297
+10255|2|15.2|20|304.0|0.00122063842601887
+10256|53|26.2|15|393.0|0.00758980301274624
+10257|27|35.1|25|877.5|0.00783552102866327
+10258|2|15.2|50|760.0|0.00376498563360745
+10259|21|8.0|10|80.0|0.00793650793650794
+10260|41|7.7|16|123.2|0.000705532012369717
+10261|21|8.0|20|160.0|0.00357142857142857
+10262|5|17.0|12|204.0|0.00326504481434059
+10263|16|13.9|60|834.0|0.00338364167478091
+10264|2|15.2|35|532.0|0.00734299516908213
+10265|17|31.2|30|936.0|0.00795918367346939
+10266|12|30.4|12|364.8|0.01
+10267|40|14.7|50|735.0|0.00182336889109402
+10268|29|99.0|10|990.0|0.00899019251725391
+10269|33|2.0|60|120.0|0.00177514792899408
+10270|36|15.2|30|456.0|0.00331395348837209
+10271|33|2.0|24|48.0|0.01
+10272|20|64.8|6|388.8|0.00267032967032967
+
+--2. I want to know the unique (distinct) cities, regions, and postal codes: (a) where we have both customers
+--and employees, (b) where we have customers but no employees AND both customers ad employees,
+--and (c) where we have employees but no customers AND both customers and employees. Write three
+--queries, using inner and outer joins. Report the results of the queries. There is no need for any further
+--reporting.
+
+--(a) where we have both customers and --employees,
+
+select distinct e.employeeid, e.firstname, e.lastname, c.customerid, c.city, c.region, c.postalcode from customers c join employees e on c.region like e.region order by e.employeeid;
+EmployeeID|FirstName|LastName|CustomerID|City|Region|PostalCode
+1|Nancy|Davolio|LAZYK|Walla Walla|WA|99362
+1|Nancy|Davolio|TRAIH|Kirkland|WA|98034
+1|Nancy|Davolio|WHITC|Seattle|WA|98128
+2|Andrew|Fuller|LAZYK|Walla Walla|WA|99362
+2|Andrew|Fuller|TRAIH|Kirkland|WA|98034
+2|Andrew|Fuller|WHITC|Seattle|WA|98128
+3|Janet|Leverling|LAZYK|Walla Walla|WA|99362
+3|Janet|Leverling|TRAIH|Kirkland|WA|98034
+3|Janet|Leverling|WHITC|Seattle|WA|98128
+4|Margaret|Peacock|LAZYK|Walla Walla|WA|99362
+4|Margaret|Peacock|TRAIH|Kirkland|WA|98034
+4|Margaret|Peacock|WHITC|Seattle|WA|98128
+8|Laura|Callahan|LAZYK|Walla Walla|WA|99362
+8|Laura|Callahan|TRAIH|Kirkland|WA|98034
+8|Laura|Callahan|WHITC|Seattle|WA|98128
+
+--(b)where we have customers but no employees AND both customers and employees,
+
+select distinct e.employeeid, e.firstname, e.lastname, c.customerid, c.city, c.region, c.postalcode from customers c left join employees e on c.region = e.region order by c.customerid;
+EmployeeID|FirstName|LastName|CustomerID|City|Region|PostalCode
+|||-- CustomerID|City|Region|PostalCode
+|||ALFKI|Berlin||12209
+|||ANATR|México D.F.||05021
+|||ANTON|México D.F.||05023
+|||AROUT|London||WA1 1DP
+|||BERGS|Luleå||S-958 22
+|||BLAUS|Mannheim||68306
+|||BLONP|Strasbourg||67000
+|||BOLID|Madrid||28023
+|||BONAP|Marseille||13008
+|||BOTTM|Tsawassen|BC|T2F 8M4
+|||BSBEV|London||EC2 5NT
+|||CACTU|Buenos Aires||1010
+|||CENTC|México D.F.||05022
+|||CHOPS|Bern||3012
+|||COMMI|Sao Paulo|SP|05432-043
+|||CONSH|London||WX1 6LT
+|||DRACD|Aachen||52066
+|||DUMON|Nantes||44000
+|||EASTC|London||WX3 6FW
+|||ERNSH|Graz||8010
+|||FAMIA|Sao Paulo|SP|05442-030
+|||FISSA|Madrid||28034
+|||FOLIG|Lille||59000
+|||FOLKO|Bräcke||S-844 67
+|||FRANK|München||80805
+|||FRANR|Nantes||44000
+|||FRANS|Torino||10100
+|||FURIB|Lisboa||1675
+|||GALED|Barcelona||08022
+|||GODOS|Sevilla||41101
+|||GOURL|Campinas|SP|04876-786
+|||GREAL|Eugene|OR|97403
+|||GROSR|Caracas|DF|1081
+|||HANAR|Rio de Janeiro|RJ|05454-876
+|||HILAA|San Cristóbal|Táchira|5022
+|||HUNGC|Elgin|OR|97827
+|||HUNGO|Cork|Co. Cork|
+|||ISLAT|Cowes|Isle of Wight|PO31 7PJ
+|||KOENE|Brandenburg||14776
+|||LACOR|Versailles||78000
+|||LAMAI|Toulouse||31000
+|||LAUGB|Vancouver|BC|V3F 2K1
+1|Nancy|Davolio|LAZYK|Walla Walla|WA|99362
+2|Andrew|Fuller|LAZYK|Walla Walla|WA|99362
+3|Janet|Leverling|LAZYK|Walla Walla|WA|99362
+4|Margaret|Peacock|LAZYK|Walla Walla|WA|99362
+8|Laura|Callahan|LAZYK|Walla Walla|WA|99362
+|||LEHMS|Frankfurt a.M.||60528
+|||LETSS|San Francisco|CA|94117
+|||LILAS|Barquisimeto|Lara|3508
+|||LINOD|I. de Margarita|Nueva Esparta|4980
+|||LONEP|Portland|OR|97219
+|||MAGAA|Bergamo||24100
+|||MAISD|Bruxelles||B-1180
+|||MEREP|Montréal|Québec|H1J 1C3
+|||MORGK|Leipzig||04179
+|||NORTS|London||SW7 1RZ
+|||OCEAN|Buenos Aires||1010
+|||OLDWO|Anchorage|AK|99508
+|||OTTIK|Köln||50739
+|||PARIS|Paris||75012
+|||PERIC|México D.F.||05033
+|||PICCO|Salzburg||5020
+|||PRINI|Lisboa||1756
+|||QUEDE|Rio de Janeiro|RJ|02389-673
+|||QUEEN|Sao Paulo|SP|05487-020
+|||QUICK|Cunewalde||01307
+|||RANCH|Buenos Aires||1010
+|||RATTC|Albuquerque|NM|87110
+|||REGGC|Reggio Emilia||42100
+|||RICAR|Rio de Janeiro|RJ|02389-890
+|||RICSU|Genève||1203
+|||ROMEY|Madrid||28001
+|||SANTG|Stavern||4110
+|||SAVEA|Boise|ID|83720
+|||SEVES|London||OX15 4NB
+|||SIMOB|Kobenhavn||1734
+|||SPECD|Paris||75016
+|||SPLIR|Lander|WY|82520
+|||SUPRD|Charleroi||B-6000
+|||THEBI|Portland|OR|97201
+|||THECR|Butte|MT|59801
+|||TOMSP|Münster||44087
+|||TORTU|México D.F.||05033
+|||TRADH|Sao Paulo|SP|05634-030
+1|Nancy|Davolio|TRAIH|Kirkland|WA|98034
+2|Andrew|Fuller|TRAIH|Kirkland|WA|98034
+3|Janet|Leverling|TRAIH|Kirkland|WA|98034
+4|Margaret|Peacock|TRAIH|Kirkland|WA|98034
+8|Laura|Callahan|TRAIH|Kirkland|WA|98034
+|||VAFFE|Århus||8200
+|||VICTE|Lyon||69004
+|||VINET|Reims||51100
+|||WANDK|Stuttgart||70563
+|||WARTH|Oulu||90110
+|||WELLI|Resende|SP|08737-363
+1|Nancy|Davolio|WHITC|Seattle|WA|98128
+2|Andrew|Fuller|WHITC|Seattle|WA|98128
+3|Janet|Leverling|WHITC|Seattle|WA|98128
+4|Margaret|Peacock|WHITC|Seattle|WA|98128
+8|Laura|Callahan|WHITC|Seattle|WA|98128
+|||WILMK|Helsinki||21240
+|||WOLZA|Warszawa||01-012
+
+--(c)where we have employees but no customers AND both customers and employees. 
+
+select distinct e.employeeid, e.firstname, e.lastname, c.customerid, c.city, c.region, c.postalcode from employees e left join customers c on c.region = e.region order by e.employeeid;
+EmployeeID|FirstName|LastName|CustomerID|City|Region|PostalCode
+1|Nancy|Davolio|LAZYK|Walla Walla|WA|99362
+1|Nancy|Davolio|TRAIH|Kirkland|WA|98034
+1|Nancy|Davolio|WHITC|Seattle|WA|98128
+2|Andrew|Fuller|LAZYK|Walla Walla|WA|99362
+2|Andrew|Fuller|TRAIH|Kirkland|WA|98034
+2|Andrew|Fuller|WHITC|Seattle|WA|98128
+3|Janet|Leverling|LAZYK|Walla Walla|WA|99362
+3|Janet|Leverling|TRAIH|Kirkland|WA|98034
+3|Janet|Leverling|WHITC|Seattle|WA|98128
+4|Margaret|Peacock|LAZYK|Walla Walla|WA|99362
+4|Margaret|Peacock|TRAIH|Kirkland|WA|98034
+4|Margaret|Peacock|WHITC|Seattle|WA|98128
+5|Steven|Buchanan||||
+6|Michael|Suyama||||
+7|Robert|King||||
+8|Laura|Callahan|LAZYK|Walla Walla|WA|99362
+8|Laura|Callahan|TRAIH|Kirkland|WA|98034
+8|Laura|Callahan|WHITC|Seattle|WA|98128
+9|Anne|Dodsworth||||
+

@@ -1,0 +1,57 @@
+Name:  Rhay C. Scott
+File:  TSQLHw-02a
+Date:  July 7, 2020
+
+Read chapter 2 of the textbook T-SQL Fundamentals, pages 27 through 49.
+
+Homework questions
+
+1. List the order of execution of a SQL query.
+
+	FROM WHERE GROUP BY HAVING SELECT• Expressions• DISTINCT ORDER BY• TOP/OFFSET-FETCH
+
+2. What does the "from" clause do?
+
+	The FROM clause is the very first query clause that is logically processed.  In this clause, you specify the names of the tables you want to query and table operators that operate on those tables.  Grabs every single row.
+
+3. What does the "where" clause do?
+
+	In the WHERE clause, you specify a predicate or logical expression to filter the rows returned by the FROM phase. Only rows for which the logical expression evaluates to TRUE are returned by the WHERE phase to the subsequent logical query processing phase.  
+
+4. What does the "group" by clause do?
+
+	You can use the GROUP BY phase to arrange the rows returned by the previous logical query processing phase in groups. The groups are determined by the elements you specify in the GROUP BY clause.  Combines the rows into aggregated  sets (unique values) as specified by the parameters implied by the clause.
+
+I don't understand the aggregate functions of the group clause.
+
+5. What does the "having" clause do?
+
+	HAVING clause is a group filter. Only groups for which the HAVING predicate evaluates to TRUE are returned by the HAVING phase to the next logical query processing phase.
+
+6. What does the "select" clause do?
+
+	The SELECT clause is where you specify the attributes (columns) you want to return in the result table of the query. You can base the expressions in the SELECT list on attributes from the queried tables, with or without further manipulation.
+
+7. What does the "distinct" keyword do?
+
+	The SQL DISTINCT keyword is used in conjunction with the SELECT statements to retrieve unique values from the table by eliminating all the duplicate records and fetching.
+
+8. What does the "order" by clause do?
+
+You use the ORDER BY clause to sort the rows in the output for presentation purposes. In terms of logical query processing, ORDER BY is the very last clause to be processed. Strictly for the human being on the other end.
+
+9. What does the "limit" clause do? This is not in the book.
+
+	The LIMIT clause is used to set an upper limit on the number of tuples returned by SQL. It is important to note that this clause is not supported by all SQL versions. The LIMIT clause can also be specified using the SQL 2008 OFFSET/FETCH FIRST clauses. The limit/offset expressions must be a non-negative integer.
+
+10. What does the "top" clause do?
+
+	The TOP filter is a proprietary T-SQL feature you can use to limit the number or percentage of rows your query returns. It relies on two elements as part of its specification: one is the number or percent of rows to return, and the other is the ordering.  Top is the propietery version of LIMIT clause.
+
+11. What do the "offset" . . . "fetch" . . . clauses do?
+
+	With the OFFSET clause you indicate how many rows to skip, and with the FETCH clause you indicate how many rows to filter after the skipped rows
+
+Extra from suggested sites:
+Data Manipulation Language (DML) is a vocabulary used to retrieve and work with data in SQL Server 2019 (15.x) and SQL Database. Most also work in SQL Data Warehouse and PDW (review each individual statement for details). Use these statements to add, modify, query, or remove data from a SQL Server database.
+

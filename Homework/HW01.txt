@@ -1,0 +1,95 @@
+Name: Rhay Scott
+TSQL Homework 01
+Date: July 1, 2020
+
+Chapter 1, T-SQL Query Fundamentals
+
+-Read Chapter 1
+
+Homework Questions
+
+1. How does the book describe the difference between imperative and declarative languages?
+
+(background) Imperative query languages are used to describe how you want something done specifically. This is accomplished with explicit control in a detailed, step-by step manner; the sequence and wording of each line of code plays a critical role
+
+Declarative "SQL" requires you to specify what you want to get and not how to get it, letting the RDBMS figure out the physical mechanics required to process your request. (background) let users express what data to retrieve, letting the engine underneath take care of seamlessly retrieving it. They function in a more general manner and involve giving broad instructions about what task is to be completed, rather than the specifics on how to complete it. They deal with the results rather than the process, focusing less on the finer details of each task
+
+2. List three categories of command statements in SQL.
+
+Data Definition Language (DDL) - DDL deals with object definitions and includes statements such as CREATE, ALTER, and DROP.
+
+Dat Manipulation Language (DML) - DML allows you to query and modify data and includes statements such as SELECT, INSERT, UPDATE, DELETE, TRUNCATE, and MERGE. This book focuses on DML.
+
+Data Control Language (DCL) -  DCL deals with permissions and includes statements such as GRANT and REVOKE. 
+
+
+3. Give an informal definition of database as used in the expression \relational database management system." Give an informal definition of database as used in the expression \Human Resources database."
+
+	a. Organized data viewed in one or more tables of columns and rows that share controlled information. 
+	b. Set(s) of data information that is listed and segmented by its relevancy to "Human Resources".
+
+
+4. The book states that, the goal of the relational model is to enable consistent representation of data with minimal or no redundancy and without sacrificing completeness. . . " Briefly state your understanding of minimal or no redundancy and completeness. Why do you think that these values are important?
+
+	a. Reduction in information that is duplicative and retains its ability to display information that is integral to the validity of the database.
+	b. Deduplication ensures sizing, weight, internal processing, and input reduction, and overall optimized performance of querying environment.
+
+5. What is the difference between two-valued logic, three-valued logic, and four-valued logic? How does
+SQL implement three-valued predicate logic?
+
+	a. in two-valued predicate logic, a predicate is either true or false. If a predicate is not true, it must be false. and every proposition is decidable.
+	b. 3-valued logic is true and false, the result of logical expressions can also be unknown. SQL’s three valued logic is a consequence of supporting null to mark absent data. If a null value affects the result of a logical expression, the result is neither true nor false but unknown.
+	c. In logic, a four-valued logic is any logic with four truth values. Multiple such logics were invented to deal with various practical problems.
+	d. SQL implements three-valued predicate logic by supporting the NULL marker to signify the generic concept of a missing value. Support for NULLs and three-valued predicate logic in SQL is the source of a great deal of confusion and complexity, though one can argue that missing values are part of reality.
+
+
+*6. How does SQL enforce entity integrity? What is entity integrity?
+
+	a. A candidate key is a key defined on one or more attributes that prevents more than one occurrence of the same tuple (row in SQL) in a relation. A predicate based on a candidate key can uniquely identify a row
+	b. primary key (for example, employeeid in the Employees relation) and use that as the preferred way to identify a row. All other candidate keys are known as alternate keys.
+
+7. How does SQL enforce referential integrity? What is referential integrity?
+
+	a. Foreign keys are used to enforce referential integrity. A foreign key is defined on one or more attributes of a relation (known as the referencing relation) and references a candidate key in another (or possibly the same) relation.
+	b. defined on one or more attributes in what’s called the referencing table and points to candidate-key (primary-key or unique-constraint) attributes in what’s called the referenced table.
+
+
+8. What is a relation as defined in the textbook? A one word answer to this question is sufficient.
+
+table
+
+
+9. Is this table in first normal form? Why or why not? If it is not, how would you change it?
+
+
+
+Yes, the tuples (rows) in the relation (table) must be unique and attributes should be atomic. This is a redundant definition of a relation; in other words, if a table truly represents a relation, it is already in first normal form.  This is a single relation.
+
+atomic each
+
+10. Is this table in second normal form? Why or why not? If it is not, how would you change it?
+
+Second normal form involves two rules. One rule is that the data must meet the first normal form. The other rule addresses the relationship between nonkey and candidate-key attributes. For every candidate key, every nonkey attribute has to be fully functionally dependent on the entire candidate key.
+
+No, pets are independent of owner, but are in the same table.  Make three tables where the third table 
+
+11. Is this table in third normal form? Why or why not? If it is not, how would you change it?
+
+No, data must meet the second normal form. Also, all nonkey attributes must be dependent on candidate keys nontransitively. Informally, this rule means that all nonkey attributes must be mutually independent. In other words, one nonkey attribute cannot be dependent on another nonkey attribute
+
+City and State is dependent on the zip code.
+
+
+12. List the components of a four-part object name.
+
+Server Name – Database server name or server alias name.
+Database Name – Database name.
+Schema Name – Owner of the object.
+Object Name – Name of the object.
+
+13. What is the difference between declarative data integrity and procedural data integrity?
+
+Declaring constraints to the columns (like PK,UNIQUE,FK,DEFAULT, CHECK) of a table is said to be Declarative Data Integrity. Enforcing the same rule by using Script, Procedure and Triggers is said to be Procedural Data Integrity
+
+
+

@@ -1,0 +1,60 @@
+Name:  Rhay C. Scott
+File:  TSQL Homework 02b
+Date:  July 9, 2020
+
+Chapter 02b, T-SQL Query Fundamentals
+Readings
+Read chapter 2 of the textbook T-SQL Fundamentals, pages 49 through 73.
+
+Homework Questions
+
+1. What is a data type? Why do we have data types?
+
+An attribute that specifies the type of data of any object or define the characteristics of the data that can be stored in a location such as a database column.  They help enforce the expected type of data to be stored, we can achieve a much better result rooted in consistency and standard formatting.  It helps humans plan storage, calculations, performance for our db and programs.
+
+2. What is a collation? Name four elements of a collation.
+
+A collation is a set of rules that defines how to compare and sort character strings. Collation is a property of character data that encapsulates several aspects: language support, sort order, case sensitivity, accent sensitivity, and more.  Collation is a set of rules that tell database engine how to compare and sort the character data in SQL Server..
+
+instance, database, column, and expression
+
+3. How would you strip whitespace from a string? For example, suppose you had \ Dave " but wanted only \Dave".
+
+select RTRIM(LTRIM)("\ Dave");
+
+4. Suppose you wanted to make a list of every college and university that was called an Institute from the college table. Write the query.
+
+SELECT * FROM college
+WHERE column1 LIKE '%Institut%';
+
+5. How would you  find the number of the index of the  first space in a string? For example, the index of the first space in \Barack Hussein Obama" would be 7.
+
+CHARINDEX(' ', '\Barack Hussein Obama' position;
+
+6. How would you select just the first name in a list of the presidents. Each record looks like the: "George Washington", "John Adams", "Thomas Jefferson". First names can be an arbitrary length, from \Cal" to \Benjamin." (e.g., Cal College, Benjamin Harrison)
+
+SELECT SUBSTRING(president, 0, CHARINDEX(' ', president, 0)) AS FirstName
+FROM (tablename)
+
+
+7. What is the order of precedence for the logical operators?
+
+5. NOT6. AND7. BETWEEN, IN, LIKE, OR8. = (Assignment
+
+8. What is the order of precedence for the math operators?
+
+1. ( ) (Parentheses)2. * (Multiplication), / (Division), % (Modulo)3. + (Positive), – (Negative), + (Addition), + (Concatenation), – (Subtraction)4. =, >, <, >=, <=, <>, !=, !>, !< 
+
+9. What is the difference between a simple and a searched CASE expression?;
+
+You use the simple form to compare one value or scalar expression with a list of possible values and return a value for the first match.
+
+The searched CASE form is more flexible in the sense you can specify predicates in the WHEN clauses rather than being restricted to using equality comparisons
+
+10. How would you turn a list of names like this: \LASTNAME, FIRSTNAME", to a list like this:\FIRSTNAME LASTNAME"?
+
+SELECT  CONCAT( RIGHT(FirstNameLastName,LEN(FirstNameLastName) - SUBSTRING_INDEX(FirstNameLastName, ' ', 1)),
+                ', ',
+                LEFT(FirstNameLastName,SUBSTRING_INDEX(FirstNameLastName, ' ', 1) - 1)
+                )
+FROM    YourTable

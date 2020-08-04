@@ -1,0 +1,193 @@
+.headers on
+
+--Name:  Rhay Scott
+
+--File:  TSQL-Programming EX02
+
+--Date:  July 10, 2020
+
+
+--1. List the company name, the contact name and the country of all customers in Poland.
+select c.companyname, c.contactname, c.country from customers c where c.country like "%poland%";
+CompanyName|ContactName|Country
+Wolski  Zajazd|Zbyszek Piestrzeniewicz|Poland
+
+--2. List the order Id, the order date, and the destination city of all orders shipped to Berlin.
+select o.orderid, o.orderdate, o.shipcity from orders o where o.shipcity like "%berlin%";
+OrderID|OrderDate|ShipCity
+10643|1997-08-25|Berlin
+10692|1997-10-03|Berlin
+10702|1997-10-13|Berlin
+10835|1998-01-15|Berlin
+10952|1998-03-16|Berlin
+11011|1998-04-09|Berlin
+ 
+ --3. How many boxes of Filo Mix do we have in stock?
+select p.unitsinstock from products p where p.productname like "%Filo%";
+UnitsInStock
+38
+ 
+ --4. List the telephone numbers of all of our shippers.
+select s.shipperid, s.phone from shippers s;
+ShipperID|Phone
+1|(503) 555-9831
+2|(503) 555-3199
+3|(503) 555-9931
+ 
+-- 5. Who is our oldest employee? Who is our youngest employee?
+select e.firstname, e.lastname, e.birthdate from employees e order by e.birthdate asc limit 1;
+FirstName|LastName|BirthDate
+Margaret|Peacock|1937-09-19 00:00:00.000
+
+select e.firstname, e.lastname, e.birthdate from employees e order by e.birthdate desc limit 1;
+FirstName|LastName|BirthDate
+Anne|Dodsworth|1966-01-27 00:00:00.000
+
+--6. List the suppliers where the owner of the supplier is also the sales contact.
+select s.companyname, s.contactname, s.contacttitle from suppliers s where s.contacttitle like "%owner%";
+CompanyName|ContactName|ContactTitle
+Leka Trading|Chandra Leka|Owner
+
+--7. Mailing Labels
+--From the Northwind database we used in class and SQLite, create mailing labels for customer represen-
+--tatives. Each label should consist of six, and exactly six, lines. The mailing labels should be suitable
+--for printing on sticky label paper, specifically Avery 8160 labels. The format should be as follows:
+
+--TITLE FIRSTNAME LASTNAME
+--COMPANYNAME
+--STREET ADDRESS
+--CITY STATE ZIP COUNTRY
+--[blank line]
+--[blank line]
+select contacttitle || ' ' || contactname || '
+   ...> ' || companyname || '
+   ...> ' || address || '
+   ...> ' || city || ' ' || region || ' ' || postalcode || ' ' || country || '
+   ...> ' || '
+   ...> ' from customers where contacttitle like 'Sales Representative' and country like 'USA';
+contacttitle || ' ' || contactname || '
+   ...> ' || companyname || '
+   ...> ' || address || '
+   ...> ' || city || ' ' || region || ' ' || postalcode || ' ' || country || '
+   ...> ' || '
+   ...> '
+Sales Representative Yoshi Latimer
+   ...> Hungry Coyote Import Store
+   ...> City Center Plaza 516 Main St.
+   ...> Elgin OR 97827 USA
+   ...> 
+   ...> 
+Sales Representative Rene Phillips
+   ...> Old World Delicatessen
+   ...> 2743 Bering St.
+   ...> Anchorage AK 99508 USA
+   ...> 
+   ...> 
+Sales Representative Jose Pavarotti
+   ...> Save-a-lot Markets
+   ...> 187 Suffolk Ln.
+   ...> Boise ID 83720 USA
+   ...> 
+   ...> 
+   
+   --8. Telephone Book
+--From the Northwind database we used in class and SQLite, create a telephone book for customer repre-
+--sentatives. Each line in the telehone book should consist of the representative last name, representative
+--First name, company name, and telephone number. Each row should look like this.
+--Lastname, Firstname Middlename [tab] Company name [tab] phone number
+
+select substr(contactname, instr(contactname, ' ')+1) || ', ' || substr(contactname, 1, instr(contactname, ' ') -1) || '     ' || companyname || '     ' || phone from customers;
+substr(contactname, instr(contactname, ' ')+1) || ', ' || substr(contactname, 1, instr(contactname, ' ') -1) || '     ' || companyname || '     ' || phone
+ContactName,      CompanyName     Phone
+Anders, Maria     Alfreds Futterkiste     030-0074321
+Trujillo, Ana     Ana Trujillo Emparedados y helados     (5) 555-4729
+Moreno, Antonio     Antonio Moreno Taquería     (5) 555-3932
+Hardy, Thomas     Around the Horn     (171) 555-7788
+Berglund, Christina     Berglunds snabbköp     0921-12 34 65
+Moos, Hanna     Blauer See Delikatessen     0621-08460
+Citeaux, Frédérique     Blondesddsl père et fils     88.60.15.31
+Sommer, Martín     Bólido Comidas preparadas     (91) 555 22 82
+Lebihan, Laurence     Bon app''     91.24.45.40
+Lincoln, Elizabeth     Bottom-Dollar Markets     (604) 555-4729
+Ashworth, Victoria     B''s Beverages     (171) 555-1212
+Simpson, Patricio     Cactus Comidas para llevar     (1) 135-5555
+Chang, Francisco     Centro comercial Moctezuma     (5) 555-3392
+Wang, Yang     Chop-suey Chinese     0452-076545
+Afonso, Pedro     Comércio Mineiro     (11) 555-7647
+Brown, Elizabeth     Consolidated Holdings     (171) 555-2282
+Ottlieb, Sven     Drachenblut Delikatessen     0241-039123
+Labrune, Janine     Du monde entier     40.67.88.88
+Devon, Ann     Eastern Connection     (171) 555-0297
+Mendel, Roland     Ernst Handel     7675-3425
+Cruz, Aria     Familia Arquibaldo     (11) 555-9857
+Roel, Diego     FISSA Fabrica Inter. Salchichas S.A.     (91) 555 94 44
+Rancé, Martine     Folies gourmandes     20.16.10.16
+Larsson, Maria     Folk och fä HB     0695-34 67 21
+Franken, Peter     Frankenversand     089-0877310
+Schmitt, Carine     France restauration     40.32.21.21
+Accorti, Paolo     Franchi S.p.A.     011-4988260
+Rodriguez, Lino     Furia Bacalhau e Frutos do Mar     (1) 354-2534
+Saavedra, Eduardo     Galería del gastrónomo     (93) 203 4560
+Pedro Freyre, José     Godos Cocina Típica     (95) 555 82 82
+Fonseca, André     Gourmet Lanchonetes     (11) 555-9482
+Snyder, Howard     Great Lakes Food Market     (503) 555-7555
+Pereira, Manuel     GROSELLA-Restaurante     (2) 283-2951
+Pontes, Mario     Hanari Carnes     (21) 555-0091
+Hernández, Carlos     HILARION-Abastos     (5) 555-1340
+Latimer, Yoshi     Hungry Coyote Import Store     (503) 555-6874
+McKenna, Patricia     Hungry Owl All-Night Grocers     2967 542
+Bennett, Helen     Island Trading     (198) 555-8888
+Cramer, Philip     Königlich Essen     0555-09876
+Tonini, Daniel     La corne d''abondance     30.59.84.10
+Roulet, Annette     La maison d''Asie     61.77.61.10
+Tannamuri, Yoshi     Laughing Bacchus Wine Cellars     (604) 555-3392
+Steel, John     Lazy K Kountry Store     (509) 555-7969
+Messner, Renate     Lehmanns Marktstand     069-0245984
+Yorres, Jaime     Let''s Stop N Shop     (415) 555-5938
+González, Carlos     LILA-Supermercado     (9) 331-6954
+Izquierdo, Felipe     LINO-Delicateses     (8) 34-56-12
+Wilson, Fran     Lonesome Pine Restaurant     (503) 555-9573
+Rovelli, Giovanni     Magazzini Alimentari Riuniti     035-640230
+Dewey, Catherine     Maison Dewey     (02) 201 24 67
+Fresnière, Jean     Mère Paillarde     (514) 555-8054
+Feuer, Alexander     Morgenstern Gesundkost     0342-023176
+Crowther, Simon     North/South     (171) 555-7733
+Moncada, Yvonne     Océano Atlántico Ltda.     (1) 135-5333
+Phillips, Rene     Old World Delicatessen     (907) 555-7584
+Pfalzheim, Henriette     Ottilies Käseladen     0221-0644327
+Bertrand, Marie     Paris spécialités     (1) 42.34.22.66
+Fernández, Guillermo     Pericles Comidas clásicas     (5) 552-3745
+Pipps, Georg     Piccolo und mehr     6562-9722
+de Castro, Isabel     Princesa Isabel Vinhos     (1) 356-5634
+Batista, Bernardo     Que Delícia     (21) 555-4252
+Carvalho, Lúcia     Queen Cozinha     (11) 555-1189
+Kloss, Horst     QUICK-Stop     0372-035188
+Gutiérrez, Sergio     Rancho grande     (1) 123-5555
+Wilson, Paula     Rattlesnake Canyon Grocery     (505) 555-5939
+Moroni, Maurizio     Reggiani Caseifici     0522-556721
+Limeira, Janete     Ricardo Adocicados     (21) 555-3412
+Holz, Michael     Richter Supermarkt     0897-034214
+Camino, Alejandra     Romero y tomillo     (91) 745 6200
+Bergulfsen, Jonas     Santé Gourmet     07-98 92 35
+Pavarotti, Jose     Save-a-lot Markets     (208) 555-8097
+Kumar, Hari     Seven Seas Imports     (171) 555-1717
+Petersen, Jytte     Simons bistro     31 12 34 56
+Perrier, Dominique     Spécialités du monde     (1) 47.55.60.10
+Braunschweiger, Art     Split Rail Beer & Ale     (307) 555-4680
+Cartrain, Pascale     Suprêmes délices     (071) 23 67 22 20
+Nixon, Liz     The Big Cheese     (503) 555-3612
+Wong, Liu     The Cracker Box     (406) 555-5834
+Josephs, Karin     Toms Spezialitäten     0251-031259
+Angel Paolino, Miguel     Tortuga Restaurante     (5) 555-2933
+Domingues, Anabela     Tradição Hipermercados     (11) 555-2167
+Nagy, Helvetius     Trail''s Head Gourmet Provisioners     (206) 555-8257
+Ibsen, Palle     Vaffeljernet     86 21 32 43
+Saveley, Mary     Victuailles en stock     78.32.54.86
+Henriot, Paul     Vins et alcools Chevalier     26.47.15.10
+Müller, Rita     Die Wandernde Kuh     0711-020361
+Koskitalo, Pirkko     Wartian Herkku     981-443655
+Parente, Paula     Wellington Importadora     (14) 555-8122
+Jablonski, Karl     White Clover Markets     (206) 555-4112
+Karttunen, Matti     Wilman Kala     90-224 8858
+Piestrzeniewicz, Zbyszek     Wolski  Zajazd     (26) 642-7012
+
